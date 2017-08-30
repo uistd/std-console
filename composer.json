@@ -16,7 +16,7 @@
   "require": {
     "php": ">=5.5.0",
     "ffan/php-utils": "1.*",
-    "ffan/std-logger" : "*"
+    "ffan/std-logger" : "1.*"
   },
   "autoload": {
     "psr-4": {
