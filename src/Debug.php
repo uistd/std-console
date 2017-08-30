@@ -61,6 +61,11 @@ class Debug
     private static $timer_arr;
 
     /**
+     * @var int io次数统计
+     */
+    private static $io_step = 0;
+
+    /**
      * 初始化
      */
     public static function init()
@@ -444,5 +449,33 @@ class Debug
         $content = '[EXCEPTION]' . join(PHP_EOL, $log_msg) . "\n=================================\n";
         LogHelper::getMainLogger()->error($content);
         return $content;
+    }
+
+    /**
+     * 增加Io步数
+     * @return string
+     */
+    public static function addIoStep()
+    {
+        ++self::$io_step;
+        return self::getIoStepStr();
+    }
+
+    /**
+     * 获取io次数(格式化好的字符串)
+     * @return string
+     */
+    public static function getIoStepStr()
+    {
+        return '[I/O][#'. self::$io_step .']';
+    }
+
+    /**
+     * 获取io步数
+     * @return int
+     */
+    public static function getIoStep()
+    {
+        return self::$io_step;
     }
 }

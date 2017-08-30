@@ -33,9 +33,12 @@ class LogRouter extends \FFan\Std\Logger\LogRouter
             case 'ERROR':
                 Debug::getConsole('ERROR')->log($message);
                 break;
-            default:
+            case 'I/O':
                 $message .= PHP_EOL . str_repeat('=', 256) . PHP_EOL;
                 Debug::getConsole(Debug::IO_TAB_NAME)->log($message);
+                break;
+            default:
+                Debug::getConsole('LOG')->log($message);
         }
         return 0;
     }
