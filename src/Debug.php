@@ -349,7 +349,6 @@ class Debug
         http_response_code(200);
         require_once __DIR__ . '/View.php';
         console_debug_view_display($view_tabs);
-        exit(0);
     }
 
     /**
