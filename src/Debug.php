@@ -423,10 +423,10 @@ class Debug
 
     /**
      * 异常信息记录
-     * @param \Exception $exception
+     * @param \Throwable $exception
      * @return string
      */
-    public static function recordException(\Exception $exception)
+    public static function recordException(\Throwable $exception)
     {
         $exception_class = get_class($exception);
         $log_msg = array("\n============$exception_class===========");
