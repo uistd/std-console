@@ -2,9 +2,9 @@
 
 namespace FFan\Std\Console;
 
-use ffan\php\utils\Ip as FFanIp;
-use ffan\php\utils\Str as FFanStr;
-use ffan\php\utils\Utils;
+use FFan\Std\Common\Ip as FFanIp;
+use FFan\Std\Common\Str as FFanStr;
+use FFan\Std\Common\Utils;
 use FFan\Std\Logger\LogHelper;
 
 /**
@@ -477,5 +477,15 @@ class Debug
     public static function getIoStep()
     {
         return self::$io_step;
+    }
+
+    /**
+     * 在控制台输出调试信息
+     * @param string $message 消息
+     * @param string $tab 标签
+     */
+    public static function debug($message, $tab = self::IO_TAB_NAME)
+    {
+        self::getConsole($tab)->log($message);
     }
 }

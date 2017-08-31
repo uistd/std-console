@@ -19,8 +19,8 @@ class Console
     private $join_str;
 
     /**
-     * XapiDebugLog constructor.
-     * @param string $join_str
+     * Console constructor.
+     * @param string $join_str 连接字符串
      */
     public function __construct($join_str = PHP_EOL)
     {
