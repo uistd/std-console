@@ -2,44 +2,43 @@
 
 namespace FFan\Std\Console;
 
+use FFan\Std\Logger\LoggerBase;
 use FFan\Std\Logger\LogLevel;
 
 /**
  * Class LogRouter 日志分离
  * @package FFan\Std\Console
  */
-class LogRouter extends \FFan\Std\Logger\LogRouter
+class LogRouter extends LoggerBase
 {
     /**
-     * 路由
+     * 收到日志
      * @param int $log_level
-     * @param string $message
-     * @return int
+     * @param string $content
      */
-    function route($log_level, $message)
+    public function onLog($log_level, $content)
     {
         $log_console = Debug::getConsole('LOG');
-        $log_console->log('[' . LogLevel::levelName($log_level) . ']' . $message);
+        $log_console->log('[' . LogLevel::levelName($log_level) . ']' . $content);
 
-        if ('[' !== $message[0]) {
-            return 0;
+        if ('[' !== $content[0]) {
+            return;
         }
-        $right_pos = strpos($message, ']');
+        $right_pos = strpos($content, ']');
         if (false === $right_pos) {
-            return 0;
+            return;
         }
-        $log_flag = substr($message, 1, $right_pos);
+        $log_flag = substr($content, 1, $right_pos);
         switch ($log_flag) {
             case 'ERROR':
-                Debug::getConsole('ERROR')->log($message);
+                Debug::getConsole('ERROR')->log($content);
                 break;
             case 'I/O':
-                $message .= PHP_EOL . str_repeat('=', 256) . PHP_EOL;
-                Debug::getConsole(Debug::IO_TAB_NAME)->log($message);
+                $content .= PHP_EOL . str_repeat('=', 256) . PHP_EOL;
+                Debug::getConsole(Debug::IO_TAB_NAME)->log($content);
                 break;
             default:
-                Debug::getConsole('LOG')->log($message);
+                Debug::getConsole('LOG')->log($content);
         }
-        return 0;
     }
 }

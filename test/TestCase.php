@@ -7,11 +7,11 @@ require_once '../vendor/autoload.php';
 
 $_GET['UIS_DEBUG_MODE'] = -1;
 
-$main_logger = LogHelper::getLogger(__DIR__ .'/runtime/logs');
-LogHelper::setMainLogger($main_logger);
+$main_logger = new \FFan\Std\Logger\FileLogger(__DIR__ .'/runtime/logs');
 Debug::init();
 
-$main_logger->warning('test');
+$log_router = LogHelper::getLogRouter();
+$log_router->warning('test');
 
 Debug::getConsole(Debug::IO_TAB_NAME)->log('This is test io message!');
 Debug::debug('This is debug msg');

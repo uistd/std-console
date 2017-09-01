@@ -79,7 +79,7 @@ class Debug
         }
         self::$start_time = microtime(true);
         //分离日志信息
-        new LogRouter(LogHelper::getMainLogger());
+        new LogRouter();
     }
 
     /**
@@ -416,7 +416,7 @@ class Debug
         $trace_info = debug_backtrace();
         array_shift($trace_info);
         $log_msg .= self::codeTrace($trace_info);
-        LogHelper::getMainLogger()->error($log_msg);
+        LogHelper::getLogRouter()->error($log_msg);
         return $log_msg;
     }
 
@@ -446,7 +446,7 @@ class Debug
             $log_msg[] = $tmp_step;
         }
         $content = '[EXCEPTION]' . join(PHP_EOL, $log_msg) . "\n=================================\n";
-        LogHelper::getMainLogger()->error($content);
+        LogHelper::getLogRouter()->error($content);
         return $content;
     }
 
