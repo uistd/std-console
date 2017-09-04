@@ -317,16 +317,18 @@ class Debug
         $view_tabs = array(
             'RESULT' => $result_content
         );
-        /**
-         * @var string $name
-         * @var Console $console
-         */
-        foreach (self::$console_arr as $name => $console) {
-            $tmp_msg = $console->dump();
-            if (empty($tmp_msg)) {
-                continue;
+        if (is_array(self::$console_arr)) {
+            /**
+             * @var string $name
+             * @var Console $console
+             */
+            foreach (self::$console_arr as $name => $console) {
+                $tmp_msg = $console->dump();
+                if (empty($tmp_msg)) {
+                    continue;
+                }
+                $view_tabs[$name] = $tmp_msg;
             }
-            $view_tabs[$name] = $tmp_msg;
         }
         if (self::isDebugTrace()) {
             $view_tabs['CODE TRACE'] = self::codeTrace();
@@ -466,7 +468,7 @@ class Debug
      */
     public static function getIoStepStr()
     {
-        return '[I/O][#'. self::$io_step .']';
+        return '[I/O][#' . self::$io_step . ']';
     }
 
     /**
