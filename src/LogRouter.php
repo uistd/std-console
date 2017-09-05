@@ -28,13 +28,13 @@ class LogRouter extends LoggerBase
         if (false === $right_pos) {
             return;
         }
-        $log_flag = substr($content, 1, $right_pos);
+        $log_flag = substr($content, 1, $right_pos - 1);
         switch ($log_flag) {
             case 'ERROR':
                 Debug::getConsole('ERROR')->log($content);
                 break;
             case 'I/O':
-                $content .= PHP_EOL . str_repeat('=', 256) . PHP_EOL;
+                $content .= PHP_EOL;
                 Debug::getConsole(Debug::IO_TAB_NAME)->log($content);
                 break;
             default:
