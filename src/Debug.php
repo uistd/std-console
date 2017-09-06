@@ -46,7 +46,7 @@ class Debug
     private static $debug_mode = 0;
 
     /**
-     * @var array logger
+     * @var Console[]
      */
     private static $console_arr;
 
@@ -310,10 +310,21 @@ class Debug
      */
     public static function displayDebugMessage($data)
     {
+        $join_str = str_repeat('=', 50);
         $end_time = microtime(true);
-        $result_content = 'TotalTime:' . round(($end_time - self::$start_time) * 1000, 3) . 'ms' . PHP_EOL
+        $result_content = $join_str .'[TOTAL]' . $join_str . PHP_EOL;
+        $result_content .= 'TotalTime:' . round(($end_time - self::$start_time) * 1000, 3) . 'ms' . PHP_EOL
             . 'Memory:' . Utils::sizeFormat(memory_get_usage()) . PHP_EOL
-            . 'Result:' . PHP_EOL . self::varFormat($data);
+            . 'I/O block:' . Debug::getIoStep() . PHP_EOL;
+        //调试信息
+        if (isset(self::$console_arr['DEBUG'])) {
+            $result_content .= $join_str . '[DEBUG]'. $join_str . PHP_EOL . self::$console_arr['DEBUG']->dump();
+        }
+        if (isset(self::$console_arr['ERROR'])) {
+            $result_content .= $join_str . '[ERROR]'. $join_str . PHP_EOL. self::$console_arr['ERROR']->dump();
+        }
+        $result_content .= $join_str . '[RESULT]' . $join_str . PHP_EOL . self::varFormat($data);
+
         $view_tabs = array(
             'RESULT' => $result_content
         );
@@ -334,9 +345,21 @@ class Debug
             $view_tabs['CODE TRACE'] = self::codeTrace();
         }
         $view_tabs['SERVER'] = self::varFormat($_SERVER);
-        $view_tabs['GET'] = self::varFormat($_GET);
-        if (!empty($_POST)) {
-            $view_tabs['POST'] = self::varFormat($_POST);
+        //作一个特殊的处理，因为 ffan uis base application 会将get 和 post 隐藏
+        if (class_exists('\FFan\Uis\Base\Application')) {
+            if (isset($GLOBALS['ORIGINAL_GET'])) {
+                $view_tabs['GET'] = $GLOBALS['ORIGINAL_GET'];
+            }
+            if (isset($GLOBALS['ORIGINAL_POST'])) {
+                $view_tabs['POST'] = $GLOBALS['ORIGINAL_POST'];
+            }
+        } else {
+            if (!empty($_GET)) {
+                $view_tabs['GET'] = self::varFormat($_GET);
+            }
+            if (!empty($_POST)) {
+                $view_tabs['POST'] = self::varFormat($_POST);
+            }
         }
         if (!empty($_COOKIE)) {
             $view_tabs['COOKIE'] = self::varFormat($_COOKIE);

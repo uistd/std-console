@@ -31,7 +31,8 @@ class LogRouter extends LoggerBase
         $log_flag = substr($content, 1, $right_pos - 1);
         switch ($log_flag) {
             case 'ERROR':
-                Debug::getConsole('ERROR')->log($content);
+            case 'DEBUG':
+                Debug::getConsole($log_flag)->log($content);
                 break;
             case 'I/O':
                 $content .= PHP_EOL;

@@ -46,7 +46,6 @@ class Console
             return '';
         }
         $result = join($this->join_str, $this->msg_buffer) . $this->join_str;
-        $this->msg_buffer = null;
         return $result;
     }
 }
