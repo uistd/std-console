@@ -10,6 +10,9 @@ function console_debug_view_display($data_tabs)
     $content_html = '';
     $index = 0;
     foreach ($data_tabs as $name => $content) {
+        if (is_array($content)) {
+            $content = \FFan\Std\Console\Debug::varFormat($content);
+        }
         $tab_html .= '<button class="console_tab_item console_tab_nav" data-index=' . $index . '>' . $name . '</button>' . PHP_EOL;
         $content_html .= '<div class="console_tab_item console_tab_content" data-index="' . $index . '"><pre>' . $content . '</pre></div>' . PHP_EOL;
         $index++;
