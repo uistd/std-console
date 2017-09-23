@@ -450,7 +450,7 @@ class Debug
      * @param \Throwable $exception
      * @return string
      */
-    public static function recordException(\Throwable $exception)
+    public static function recordException($exception)
     {
         $exception_class = get_class($exception);
         $log_msg = array("\n============$exception_class===========");
