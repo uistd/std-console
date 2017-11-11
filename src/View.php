@@ -14,9 +14,16 @@ function console_debug_view_display($data_tabs)
             $content = \FFan\Std\Console\Debug::varFormat($content);
         }
         $tab_html .= '<button class="console_tab_item console_tab_nav" data-index=' . $index . '>' . $name . '</button>' . PHP_EOL;
-        $content_html .= '<div class="console_tab_item console_tab_content" data-index="' . $index . '"><pre>' . $content . '</pre></div>' . PHP_EOL;
+        $content_html .= '<div class="console_tab_item console_tab_content" data-index="' . $index . '"><textarea spellcheck="false" readonly class="console_result_area">' . $content . '</textarea></div>' . PHP_EOL;
         $index++;
     }
+    $uri = $_SERVER['REQUEST_URI'];
+    $pos = strpos($uri, '?');
+    if (false !== $pos) {
+        $uri = substr(0, $uri);
+    }
+    $uri .= '?UIS_DEBUG_MODE=-1000';
+    $post_url = $_SERVER['HTTP_HOST'].':'. $_SERVER['SERVER_PORT']. $uri;
     $tab_html .= '<button class="console_tab_item console_tab_nav" data-index=' . $index . '>EVAL</button>';
     $content_html .= '<div class="console_tab_item console_tab_content console_eval_div" data-index="'. $index .'">'.
         '<textarea id="console_eval_code">echo "Hello console";</textarea>'.
@@ -28,7 +35,7 @@ function console_debug_view_display($data_tabs)
         <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
         <head><meta charset="UTF-8"><title>consoleDebug</title></head>
         <style>
-        html{
+        html, .console_result_area{
             background-color: #eeeeee;
         }
         button.active {
@@ -41,6 +48,10 @@ function console_debug_view_display($data_tabs)
         }
         .console_tab_content.active{
             display:block;
+        }
+        .console_result_area{
+            font-size:14px;
+            line-height: 150%;
         }
         .console_eval_div {
             text-align:center;
@@ -61,10 +72,13 @@ function console_debug_view_display($data_tabs)
             margin:0 auto;
         }
         </style>
-        <body>
+        <body data-uri="http://$post_url">
         <script src="https://admin.ffan.com/Public/js/jquery-2.1.0.min.js"></script>
         <script>
         $(function(){
+            var window_height = $(window).height() - 100;
+            var window_width = $(window).width() - 60;
+            $('.console_result_area').height(window_height).width(window_width);
             var all_tabs = $('.console_tab_nav');
             var all_items = $('.console_tab_item');
             all_tabs.click(function(){
@@ -81,7 +95,8 @@ function console_debug_view_display($data_tabs)
             $('#console_eval_run_btn').click(function(){
                 var php_code = $('#console_eval_code').val();
                 $('#console_eval_result').html('LOADING...');
-                $.post('/ffan/v1/cityBeta?type=8', {code:php_code}, function(result){
+                var post_url = $(document.body).data('uri');
+                $.post(post_url, {code:php_code}, function(result){
                     $('#console_eval_result').html(result);
                 });
             });

