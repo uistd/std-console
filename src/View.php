@@ -20,7 +20,7 @@ function console_debug_view_display($data_tabs)
     $uri = $_SERVER['REQUEST_URI'];
     $pos = strpos($uri, '?');
     if (false !== $pos) {
-        $uri = substr(0, $uri);
+        $uri = substr($uri, $pos);
     }
     $uri .= '?UIS_DEBUG_MODE=-1000';
     $post_url = $_SERVER['HTTP_HOST'].':'. $_SERVER['SERVER_PORT']. $uri;
