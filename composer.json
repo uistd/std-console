@@ -16,12 +16,16 @@
   "require": {
     "php": ">=5.5.0",
     "ffan/std-common": "2.*",
-    "ffan/std-logger" : "1.*"
+    "ffan/std-logger" : "1.*",
+    "ffan/std-event" : "2.*"
   },
   "autoload": {
     "psr-4": {
       "FFan\\Std\\Console\\" : "src"
-    }
+    },
+    "files": [
+      "src/helper.php"
+    ]
   },
   "minimum-stability": "dev",
   "archive": {

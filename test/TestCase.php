@@ -16,3 +16,4 @@ $log_router->warning('test');
 Debug::getConsole(Debug::IO_TAB_NAME)->log('This is test io message!');
 Debug::debug('This is debug msg');
 Debug::displayDebugMessage(array(1,3,4,5));
+dd('hahahaha');
