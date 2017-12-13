@@ -73,7 +73,7 @@ function console_debug_view_display($data_tabs)
         }
         </style>
         <body data-uri="http://$post_url">
-        <script src="https://admin.ffan.com/Public/js/jquery-2.1.0.min.js"></script>
+        <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
         <script>
         $(function(){
             var window_height = $(window).height() - 100;
