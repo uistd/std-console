@@ -1,15 +1,15 @@
 <?php
 
-namespace FFan\Std\Console;
+namespace UiStd\Console;
 
-use FFan\Std\Common\Ip as FFanIp;
-use FFan\Std\Common\Str as FFanStr;
-use FFan\Std\Common\Utils;
-use FFan\Std\Logger\LogHelper;
+use UiStd\Common\Ip as UisIp;
+use UiStd\Common\Str as UisStr;
+use UiStd\Common\Utils;
+use UiStd\Logger\LogHelper;
 
 /**
  * Class Debug 调试类
- * @package FFan\Std\Console
+ * @package UiStd\Console
  */
 class Debug
 {
@@ -89,8 +89,8 @@ class Debug
     private static function envCheck()
     {
         //只允许内网访问
-        $ip = FFanIp::get();
-        return FFanIp::isInternal($ip);
+        $ip = UisIp::get();
+        return UisIp::isInternal($ip);
     }
 
     /**
@@ -299,7 +299,7 @@ class Debug
      */
     private static function strFormat($str, $str_cut_len)
     {
-        if (!FFanStr::isUtf8($str)) {
+        if (!UisStr::isUtf8($str)) {
             $str = '[BINARY STRING]' . base64_encode($str);
         }
         if (strlen($str_cut_len) > $str_cut_len) {
@@ -316,16 +316,16 @@ class Debug
     {
         $join_str = str_repeat('=', 50);
         $end_time = microtime(true);
-        $result_content = $join_str .'[TOTAL]' . $join_str . PHP_EOL;
+        $result_content = $join_str . '[TOTAL]' . $join_str . PHP_EOL;
         $result_content .= 'TotalTime:' . round(($end_time - self::$start_time) * 1000, 3) . 'ms' . PHP_EOL
             . 'Memory:' . Utils::sizeFormat(memory_get_usage()) . PHP_EOL
             . 'I/O block:' . Debug::getIoStep() . PHP_EOL;
         //调试信息
         if (isset(self::$console_arr['DEBUG'])) {
-            $result_content .= $join_str . '[DEBUG]'. $join_str . PHP_EOL . self::$console_arr['DEBUG']->dump();
+            $result_content .= $join_str . '[DEBUG]' . $join_str . PHP_EOL . self::$console_arr['DEBUG']->dump();
         }
         if (isset(self::$console_arr['ERROR'])) {
-            $result_content .= $join_str . '[ERROR]'. $join_str . PHP_EOL. self::$console_arr['ERROR']->dump();
+            $result_content .= $join_str . '[ERROR]' . $join_str . PHP_EOL . self::$console_arr['ERROR']->dump();
         }
         $result_content .= $join_str . '[RESULT]' . $join_str . PHP_EOL . self::varFormat($data);
 
@@ -349,21 +349,12 @@ class Debug
             $view_tabs['CODE TRACE'] = self::codeTrace();
         }
         $view_tabs['SERVER'] = self::varFormat($_SERVER);
-        //作一个特殊的处理，因为 ffan uis base application 会将get 和 post 隐藏
-        if (class_exists('\FFan\Uis\Base\Application')) {
-            if (isset($GLOBALS['ORIGINAL_GET'])) {
-                $view_tabs['GET'] = $GLOBALS['ORIGINAL_GET'];
-            }
-            if (isset($GLOBALS['ORIGINAL_POST'])) {
-                $view_tabs['POST'] = $GLOBALS['ORIGINAL_POST'];
-            }
-        } else {
-            if (!empty($_GET)) {
-                $view_tabs['GET'] = self::varFormat($_GET);
-            }
-            if (!empty($_POST)) {
-                $view_tabs['POST'] = self::varFormat($_POST);
-            }
+
+        if (!empty($_GET)) {
+            $view_tabs['GET'] = self::varFormat($_GET);
+        }
+        if (!empty($_POST)) {
+            $view_tabs['POST'] = self::varFormat($_POST);
         }
         if (!empty($_COOKIE)) {
             $view_tabs['COOKIE'] = self::varFormat($_COOKIE);

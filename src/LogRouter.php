@@ -1,13 +1,13 @@
 <?php
 
-namespace FFan\Std\Console;
+namespace UiStd\Console;
 
-use FFan\Std\Logger\LoggerBase;
-use FFan\Std\Logger\LogLevel;
+use UiStd\Logger\LoggerBase;
+use UiStd\Logger\LogLevel;
 
 /**
  * Class LogRouter 日志分离
- * @package FFan\Std\Console
+ * @package UiStd\Console
  */
 class LogRouter extends LoggerBase
 {

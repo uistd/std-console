@@ -1,8 +1,8 @@
 <?php
-use FFan\Std\Console\Debug;
-use FFan\Std\Event\EventDriver;
-use FFan\Std\Event\EventManager;
-use FFan\Std\Logger\LogHelper;
+use UiStd\Console\Debug;
+use UiStd\Event\EventDriver;
+use UiStd\Event\EventManager;
+use UiStd\Logger\LogHelper;
 
 /**
  * 打印
@@ -26,7 +26,7 @@ function dd($expression, $_ = null)
     foreach (func_get_args() as $each_arg) {
         echo Debug::varFormat($each_arg), PHP_EOL;
     }
-    ffan_die();
+    uis_die();
 }
 
 /**
@@ -37,7 +37,7 @@ function dd($expression, $_ = null)
  */
 function config($key, $default = null)
 {
-    return \FFan\Std\Common\Config::get($key, $default);
+    return \UiStd\Common\Config::get($key, $default);
 }
 
 /**
@@ -64,16 +64,16 @@ function debugTotalTime()
  * 经过包装过的exit函数
  * @param int|string $status
  */
-function ffan_exit($status = 0)
+function uis_exit($status = 0)
 {
-    ffan_die($status);
+    uis_die($status);
 }
 
 /**
  * 经过包装过的exit函数
  * @param int|string $status
  */
-function ffan_die($status = 0)
+function uis_die($status = 0)
 {
     EventManager::instance()->trigger(EventDriver::EVENT_EXIT);
     die($status);

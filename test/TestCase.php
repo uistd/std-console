@@ -1,13 +1,13 @@
 <?php
 
-use FFan\Std\Console\Debug;
-use FFan\Std\Logger\LogHelper;
+use UiStd\Console\Debug;
+use UiStd\Logger\LogHelper;
 
 require_once '../vendor/autoload.php';
 
 $_GET['UIS_DEBUG_MODE'] = -1;
 
-$main_logger = new \FFan\Std\Logger\FileLogger(__DIR__ .'/runtime/logs');
+$main_logger = new \UiStd\Logger\FileLogger(__DIR__ .'/runtime/logs');
 Debug::init();
 
 $log_router = LogHelper::getLogRouter();

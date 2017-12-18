@@ -1,6 +1,6 @@
 {
-  "name": "ffan/std-console",
-  "description": "FFan STD Console",
+  "name": "uistd/console",
+  "description": "UI Service 调试控制台组件",
   "keywords": [
     "ffan",
     "console"
@@ -15,13 +15,13 @@
   ],
   "require": {
     "php": ">=5.5.0",
-    "ffan/std-common": "2.*",
-    "ffan/std-logger" : "1.*",
-    "ffan/std-event" : "2.*"
+    "uistd/common": "3.*",
+    "uistd/logger" : "2.*",
+    "uistd/event" : "3.*"
   },
   "autoload": {
     "psr-4": {
-      "FFan\\Std\\Console\\" : "src"
+      "UiStd\\Console\\" : "src"
     },
     "files": [
       "src/helper.php"

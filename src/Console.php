@@ -1,10 +1,10 @@
 <?php
 
-namespace FFan\Std\Console;
+namespace UiStd\Console;
 
 /**
  * Class Console
- * @package FFan\Std\Console
+ * @package UiStd\Console
  */
 class Console
 {

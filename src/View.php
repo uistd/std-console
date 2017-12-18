@@ -11,7 +11,7 @@ function console_debug_view_display($data_tabs)
     $index = 0;
     foreach ($data_tabs as $name => $content) {
         if (is_array($content)) {
-            $content = \FFan\Std\Console\Debug::varFormat($content);
+            $content = \UiStd\Console\Debug::varFormat($content);
         }
         $tab_html .= '<button class="console_tab_item console_tab_nav" data-index=' . $index . '>' . $name . '</button>' . PHP_EOL;
         $content_html .= '<div class="console_tab_item console_tab_content" data-index="' . $index . '"><textarea spellcheck="false" readonly class="console_result_area">' . $content . '</textarea></div>' . PHP_EOL;
@@ -23,7 +23,7 @@ function console_debug_view_display($data_tabs)
         $uri = substr($uri, 0, $pos);
     }
     $uri .= '?UIS_DEBUG_MODE=-1000';
-    $post_url = $_SERVER['HTTP_HOST'].':'. $_SERVER['SERVER_PORT']. $uri;
+    $post_url = $_SERVER['HTTP_HOST']. $uri;
     $tab_html .= '<button class="console_tab_item console_tab_nav" data-index=' . $index . '>EVAL</button>';
     $content_html .= '<div class="console_tab_item console_tab_content console_eval_div" data-index="'. $index .'">'.
         '<textarea id="console_eval_code">echo "Hello console";</textarea>'.
